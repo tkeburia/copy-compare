@@ -1,5 +1,9 @@
 .App {
+<<<<<<< HEAD
   padding: 1rem;
+=======
+  text-align: center;
+>>>>>>> b4c74b6 (Initialize project using Create React App)
 }
 
 .App-logo {
@@ -36,6 +40,7 @@
     transform: rotate(360deg);
   }
 }
+<<<<<<< HEAD
 
 .controls {
   display: flex;
@@ -60,3 +65,5 @@
   text-align: center;
   margin-bottom: 2rem;
 }
+=======
+>>>>>>> b4c74b6 (Initialize project using Create React App)

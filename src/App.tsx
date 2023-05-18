@@ -78,7 +78,7 @@ function App() {
         {diffVisible && (
           <Button
             className="arrows"
-            disabled={index >= slugs.length}
+            disabled={index + 1 >= slugs.length}
             variant="outlined"
             startIcon={<ArrowRightIcon />}
             onClick={() => setIndex(index + 1)}

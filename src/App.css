@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  padding: 1rem;
 }
 
 .App-logo {
@@ -35,4 +35,28 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.controls {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.controls button{
+  margin-left: 1rem;
+  flex-grow: 2;
+  max-height: 3.5rem;
+}
+
+.controls .MuiTextField-root {
+  flex-grow: 1;
+}
+
+.controls .arrows{
+  flex-grow: 4;
+}
+
+.details {
+  text-align: center;
+  margin-bottom: 2rem;
 }

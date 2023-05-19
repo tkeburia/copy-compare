@@ -1,47 +1,32 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, LinearProgress } from "@mui/material";
 import "./App.css";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import DiffViewer from "react-diff-viewer-continued";
+import useApi from "./hooks/useApi";
 
 import { TextField } from "@mui/material";
 
 function App() {
   const [slugs, setSlugs] = useState<string[]>([]);
-  const [newText, setNewText] = useState<string>("");
-  const [oldText, setOldText] = useState<string>("");
   const [index, setIndex] = useState<number>(0);
-  const [diffVisible, setDiffVisible] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchData = async () => {
-    const apiUrl = `${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}/?articleSlug=${slugs[index]}`;
-
-    setLoading(true);
-    const result: { new: string; old: string } = await (
-      await fetch(apiUrl)
-    ).json();
-
-    setNewText(result.new);
-    setOldText(result.old);
-    setLoading(false);
-    setDiffVisible(true);
-  };
+  const [
+    { newText, oldText, diffVisible, loading },
+    setSlug,
+    setNewText,
+    setOldText,
+    setDiffVisible,
+  ] = useApi();
 
   const resetState = () => {
     setSlugs([]);
+    setIndex(0);
     setNewText("");
     setOldText("");
     setDiffVisible(false);
-    setIndex(0);
   };
-
-  useEffect(() => {
-    if (slugs.length > 0) {
-      fetchData();
-    }
-  }, [index]);
 
   return (
     <div className="App">
@@ -58,7 +43,7 @@ function App() {
         />
         <Button
           variant="outlined"
-          onClick={() => fetchData()}
+          onClick={() => setSlug(slugs[index])}
           disabled={diffVisible}
         >
           Fetch
@@ -72,7 +57,10 @@ function App() {
             disabled={index <= 0}
             variant="outlined"
             startIcon={<ArrowLeftIcon />}
-            onClick={() => setIndex(index - 1)}
+            onClick={async () => {
+              setSlug(slugs[index - 1]);
+              setIndex(() => index - 1);
+            }}
           />
         )}
         {diffVisible && (
@@ -81,7 +69,10 @@ function App() {
             disabled={index + 1 >= slugs.length}
             variant="outlined"
             startIcon={<ArrowRightIcon />}
-            onClick={() => setIndex(index + 1)}
+            onClick={async () => {
+              setSlug(slugs[index + 1]);
+              setIndex(index + 1);
+            }}
           />
         )}
       </div>
